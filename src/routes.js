@@ -2,6 +2,7 @@ const express = require('express');
 
 const UserController = require('./controllers/UserController');
 const FavoritesController = require('./controllers/FavoritesController');
+const RecipesController = require('./controllers/RecipesController');
 
 const {celebrate,Segments,Joi} = require('celebrate') 
 
@@ -28,5 +29,9 @@ routes.post("/users",celebrate({
         senha_p:Joi.string().required()
     })} 
     ),UserController.create); 
+
+routes.post('/recipes', RecipesController.create);
+routes.get('/recipes/ingrediente', RecipesController.searchIngr);
+routes.get('/recipes/:categoria', RecipesController.searchCat);
 
 module.exports = routes; //exportando as rotas
