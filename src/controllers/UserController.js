@@ -4,7 +4,7 @@ var SHA256 = require("crypto-js/sha256");
 
 module.exports = {
     async create(request, response) { 
-        const { nome, senha_p, email} = request.body;
+        const { nome, senha_p, email_p} = request.body;
     
         //const id = crypto.randomBytes(4).toString('HEX');
 
@@ -18,6 +18,7 @@ module.exports = {
         } 
 
         const senha = SHA256(senha_p).toString(); 
+		const email = SHA256(email_p).toString(); 
 
         await connection('usuarios').insert({
           //id,

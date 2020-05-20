@@ -1,6 +1,7 @@
 const express = require('express');
 
 const UserController = require('./controllers/UserController');
+const RecipeController = require('./controllers/RecipeController');
 const FavoritesController = require('./controllers/FavoritesController');
 const RecipesController = require('./controllers/RecipesController');
 
@@ -11,6 +12,8 @@ const routes = express.Router();
 routes.get('/favorites', FavoritesController.index);
 routes.post('/favorites', FavoritesController.create);
 routes.delete('/favorites/:id', FavoritesController.delete);
+
+
 routes.get('/users', UserController.index);
 
 routes.post("/users/login",celebrate({
@@ -30,8 +33,13 @@ routes.post("/users",celebrate({
     })} 
     ),UserController.create); 
 
-routes.post('/recipes', RecipesController.create);
-routes.get('/recipes/ingrediente', RecipesController.searchIngr);
-routes.get('/recipes/:categoria', RecipesController.searchCat);
+routes.get('/recipes', RecipeController.index);
+
+routes.post('/recipes', RecipeController.create);
+
+routes.get('/recipes/ingredients', RecipeController.recibe_by_ingredients);
+
+routes.get('/recipes/category', RecipeController.recibe_by_category);
+
 
 module.exports = routes; //exportando as rotas
