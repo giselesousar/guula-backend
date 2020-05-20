@@ -3,7 +3,6 @@ const express = require('express');
 const UserController = require('./controllers/UserController');
 const RecipeController = require('./controllers/RecipeController');
 const FavoritesController = require('./controllers/FavoritesController');
-const RecipesController = require('./controllers/RecipesController');
 
 const {celebrate,Segments,Joi} = require('celebrate') 
 
@@ -12,7 +11,6 @@ const routes = express.Router();
 routes.get('/favorites', FavoritesController.index);
 routes.post('/favorites', FavoritesController.create);
 routes.delete('/favorites/:id', FavoritesController.delete);
-
 
 routes.get('/users', UserController.index);
 
