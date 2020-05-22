@@ -8,17 +8,14 @@ module.exports = {
     
         //const id = crypto.randomBytes(4).toString('HEX');
 
-        const email_cadastrado = await connection('usuarios').where('email',email).select('email').first();
+        const email_cadastrado = await connection('usuarios').where('email',email_p).select('email').first();
 
         if (email_cadastrado){ 
-            
             return response.status(401).json({error : "email já existe !", error2 : email_cadastrado});
-
-
         } 
 
         const senha = SHA256(senha_p).toString(); 
-		const email = SHA256(email_p).toString(); 
+		    const email = SHA256(email_p).toString(); 
 
         await connection('usuarios').insert({
           //id,
@@ -27,7 +24,7 @@ module.exports = {
           email
         })
     
-        return response.json({ senha });
+        return response.json({ "staus":"OK" });
       },
 
       async index(request, response) {

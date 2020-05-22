@@ -7,9 +7,14 @@ module.exports = {
     connection: {
       filename: './src/database/guula.sqlite'
     },
-    migrations: { 
-      directory: './src/database/migrations' 
-    }, 
+    pool: {
+      min: 2,
+      max: 10
+    },
+    useNullAsDefault: true,
+    migrations: {
+      tableName: 'knex_migrations'
+    },
     useNullAsDefault: true,
   },
 
