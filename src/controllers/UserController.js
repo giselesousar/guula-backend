@@ -35,9 +35,9 @@ module.exports = {
 
       async login(request, response) {
         const { senha_p, email_p} = request.body;
-
+const email = SHA256(email_p).toString(); 
         const senha_comp = SHA256(senha_p).toString();
-        const id_senha = await connection('usuarios').where('email',email_p).select('id','senha').first();
+        const id_senha = await connection('usuarios').where('email',email).select('id','senha').first();
         
         if(!id_senha){
             return response.status(401).json({error : "Email não cadastrado!"});

@@ -27,6 +27,7 @@ routes.delete('/favorites/:id',celebrate({
         id:Joi.number().required(),
     })}), FavoritesController.delete);
 
+
 routes.get('/users', UserController.index);
 
 routes.post("/users/login",celebrate({
@@ -46,7 +47,7 @@ routes.post("/users",celebrate({
     })} 
     ),UserController.create); 
 
-routes.get('/recipes',celebrate({
+routes.post('/recipes',celebrate({
     [Segments.BODY] : Joi.object().keys({
         titulo:Joi.string().required(),
         categoria:Joi.string().required(),
@@ -56,19 +57,22 @@ routes.get('/recipes',celebrate({
         modo_preparo:Joi.string().required(),
         imagem:Joi.string().required()
     })}
-    ),RecipeController.index);
+    ),RecipeController.create);
 
-routes.get('/recipes/ingredients',celebrate({
-    [Segments.BODY] : Joi.object().keys({
-        ingredientes:Joi.string().required()
-    })} 
-    ),RecipeController.recibe_by_ingredients);
+routes.get('/recipes',RecipeController.index);
 
 routes.get('/recipes/category',celebrate({
     [Segments.BODY] : Joi.object().keys({
         categoria:Joi.string().required()
     })}
-    ),RecipeController.recibe_by_category);
+    ),RecipeController.recipe_by_category);
+	
 
+routes.get('/recipes/ingredientes',RecipeController.recipe_by_ingredients); 
+
+routes.get('/recipes/random/:quant',celebrate({
+        [Segments.PARAMS] : Joi.object().keys({
+            quant:Joi.number().required(),
+        })}), RecipeController.recipe_random);
 
 module.exports = routes; //exportando as rotas

@@ -29,16 +29,13 @@ module.exports = {
         if(!usuario.length){
             return response.status(401).json({ error: 'usuario não cadastrado' });
         }
-        const receita = await connection('receitas_usuarios').where("receita_id", receita_id).select('*');
-        if(!receita.length){
+
         const [id] = await connection('receitas_usuarios').insert({
             usuario_id,
             receita_id
         })
 
         return response.json({ id })
-        }
-        return response.status(401).json({ error: 'operation not permitted' });
     },
 
     async delete(request, response){

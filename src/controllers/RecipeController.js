@@ -27,8 +27,9 @@ module.exports = {
         return response.json(usuarios);
       },
 	  
-	    async recibe_by_category(request, response) {
+	    async recipe_by_category(request, response) {
         var { categoria} = request.body;
+
         const usuarios = await connection('receitas').where("categoria","=",categoria).select('*');
         const [count] = await connection('receitas').where("categoria","=",categoria).count();
 
@@ -36,11 +37,35 @@ module.exports = {
         return response.json(usuarios);
       },
 
-      async recibe_by_ingredients(request, response) {
-        var { ingredientes} = request.body;
+      async recipe_random(request, response) {
+        var list_ids = [];
+        const { quant } = request.params;
+        var receita = ""
+        var receitas = []
+
+        console.log(quant)
+
+        while(list_ids.length < quant){
+            var random_id = Math.floor((Math.random() * 7000)+ 1)
+            console.log((Math.random() * 100)+ 1)
+
+            if(list_ids.indexOf(random_id) == -1 ){
+              list_ids.push(random_id)
+              receita = await connection('receitas').where("id","=",random_id).select('*');
+              receitas.push(receita[0])
+            }
+        }
+
+        return response.json(receitas);
+      },
+
+      async recipe_by_ingredients(request, response) {
+        var { ingredientes} = request.headers;
         
         var lista_ingredientes = ingredientes.split(" ");
-
+		
+		console.log(lista_ingredientes);
+		
         var query = "SELECT * FROM receitas WHERE ingredientes LIKE "+"'%"+lista_ingredientes[0]+"%'";
 
         for(var i = 1; i < lista_ingredientes.length; i++){
@@ -53,6 +78,5 @@ module.exports = {
         
         response.header("Total_Receitas_by_Ingredientes",count)
         return response.json(receitas_encontradas);
-
       }
 }
