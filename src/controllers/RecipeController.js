@@ -17,14 +17,16 @@ module.exports = {
         })
     
         return response.json({ titulo });
-      },
+      }, 
 
       async index(request, response) {
-        const usuarios = await connection('receitas').select('*');
         const [count] = await connection('receitas').count();
-        
+        const {page} = request.query;
+        const receitas = await connection('receitas')
+          .whereBetween('id', [(page*20) - 19,page*20])
+          .select('*');
         response.header("Total_Receitas",count["count(*)"])
-        return response.json(usuarios);
+        return response.json(receitas);
       },
 	  
 	    async recipe_by_category(request, response) {
