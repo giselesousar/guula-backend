@@ -9,7 +9,9 @@ const {celebrate,Segments,Joi} = require('celebrate')
 const routes = express.Router(); 
 
 routes.get('/favorites',celebrate({
-
+    [Segments.QUERY]:{
+        page: Joi.number().required()
+    },
     [Segments.HEADERS] : Joi.object({authorization: Joi.string().required(),}).unknown()
 
 }),FavoritesController.index);

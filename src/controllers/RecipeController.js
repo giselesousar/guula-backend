@@ -21,9 +21,10 @@ module.exports = {
 
       async index(request, response) {
         const [count] = await connection('receitas').count();
-        const {page} = request.query;
+        const {page = 1} = request.query;
         const receitas = await connection('receitas')
-          .whereBetween('id', [(page*20) - 19,page*20])
+          .limit(20)
+          .offset((page-1) * 20)
           .select('*');
         response.header("Total_Receitas",count["count(*)"])
         return response.json(receitas);
