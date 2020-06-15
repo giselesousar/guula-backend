@@ -24,10 +24,12 @@ routes.post('/favorites',celebrate({
 
 }) ,FavoritesController.create);    
 
-routes.delete('/favorites/:id',celebrate({
-    [Segments.PARAMS] : Joi.object().keys({
-        id:Joi.number().required(),
-    })}), FavoritesController.delete);
+routes.delete('/favorites/:id', celebrate({
+    [Segments.HEADERS]: Joi.object({ authorization: Joi.string().required() }).unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+        id: Joi.number().required(),
+    })
+}), FavoritesController.delete);
 
 
 routes.get('/users', UserController.index);
