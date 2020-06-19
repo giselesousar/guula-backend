@@ -83,4 +83,10 @@ routes.get('/recipes/random/:quant',celebrate({
             quant:Joi.number().required(),
         })}), RecipeController.recipe_random);
 
+routes.get('/recipes/:ids', celebrate({
+    [Segments.PARAMS] : Joi.object().keys({
+        ids: Joi.string().required(),
+    }) 
+}), RecipeController.recipe_ids)
+
 module.exports = routes; //exportando as rotas

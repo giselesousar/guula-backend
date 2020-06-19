@@ -75,11 +75,23 @@ module.exports = {
           query += " and ingredientes LIKE "+"'%"+lista_ingredientes[i]+"%'"
         }
         console.log(query);
+        
 
         var receitas_encontradas = await connection.raw(query);
         var count = Object.keys(receitas_encontradas).length;
         
         response.header("Total_Receitas_by_Ingredientes",count)
         return response.json(receitas_encontradas);
-      }
+      },
+      async recipe_ids(request, response) {
+        const { ids } = request.params;
+        const i = (ids.split(',')).map(id => {
+          return Number(id);
+        })
+        const receitas = await connection('receitas').whereIn('id', i).select('*');
+
+        return response.send(receitas)
+      },
+
+      
 }
