@@ -83,7 +83,7 @@ routes.get('/recipes/random/:quant',celebrate({
             quant:Joi.number().required(),
         })}), RecipeController.recipe_random);
 
-routes.get('/recipes/:ids', celebrate({
+routes.get('/recipes/ids/:ids', celebrate({
     [Segments.PARAMS] : Joi.object().keys({
         ids: Joi.string().required(),
     }) 
