@@ -34,6 +34,18 @@ routes.delete('/favorites/:id', celebrate({
 
 routes.get('/users', UserController.index);
 
+routes.get('/users/:email', celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+        email: Joi.string().required().email(),
+    })
+}), UserController.getUserByEmail);
+
+routes.post('/users/password',celebrate({
+    
+    [Segments.BODY] : Joi.object().keys({email_p: Joi.string().required().email(), senha_p:Joi.string().required()})
+
+}) ,UserController.changePassword);  
+
 routes.post("/users/login",celebrate({
 
     [Segments.BODY] : Joi.object().keys({
